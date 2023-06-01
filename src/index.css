@@ -33,62 +33,56 @@ code {
     monospace;
 }
 
-.relative {
-  position: relative;
+.notes {
+  z-index: 10;
 }
 
-.row {
-  display: flex;
-  align-items: center;
+.bubble-container {
+  z-index: 5;
+  position: fixed;
+  transform: translate(0, 0);
 }
 
-.column {
+.bubble {
+  opacity: 0;
+  pointer-events: none;
+  border-radius: 50%;
+  border: 1.5px solid rgba(0,0,0,0.25);
+  width: 20px;
+  aspect-ratio: 1;
+  transform: translate(0, 0);
+}
+
+.color-bubble {
+  border-radius: 50%;
+  border: 1.5px solid rgba(0,0,0,0.25);
+  width: 20px;
+  aspect-ratio: 1;
+}
+
+.side-menu {
+  border-right: 2px solid rgba(0,0,0,0.15);
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.column-stretch {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-}
-
-.pointer {
-  cursor: pointer;
-}
-
-.no-select {
+  padding: 20px 15px;
+  gap: 15px;
   user-select: none;
 }
 
-.w-full {
-  width: 100%;
+.test {
+  margin-top: 300px;
+  cursor: pointer;
 }
 
-.radius-6 {
-  border-radius: 6px;
-}
-
-.p-1 {
-  padding: 1rem;
-}
-
-.p-2 {
-  padding: 1.5rem;
-}
-
-.border {
-  border: 1px solid #ccc;
-}
-
-.container {
-  min-height: 0;
+.side-menu .MuiButton-root {
   min-width: 0;
-}
-
-/* widgets  */
-.widget-container {
-  width: 100%;
-  height: 100%;
+  aspect-ratio: 1;
+  width: 40px;
+  border-radius: 50%;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
