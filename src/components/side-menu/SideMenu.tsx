@@ -2,10 +2,10 @@ import React, {useRef, useState} from "react";
 import Button from "@mui/material/Button";
 import {Add} from "@mui/icons-material";
 import "./SideMenu.css"
-import {Color, THEME_COLORS} from "../../models/color.utils";
+import {Color, ColorBubble, THEME_COLORS} from "../../models/color.utils";
 
 
-function SideMenu({ bubbleClick = () => {} } = { bubbleClick: (color: Color, event: React.MouseEvent) => {} }) {
+function SideMenu({ bubbleClick = () => {} } = { bubbleClick: (colorBubble: ColorBubble) => {} }) {
     const BUBBLE_FRAME_TIME = 85;
     const rawAnimation = [
         {transform: "translateY(0)", easing: "ease-out"},
@@ -46,7 +46,7 @@ function SideMenu({ bubbleClick = () => {} } = { bubbleClick: (color: Color, eve
                                          ref={elem => elem ? bubbles.current.push(elem!) : null}
                                          className="color-bubble absolute pointer"
                                          style={{ background: color.color }}
-                                         onClick={ev => bubbleClick(color, ev)}
+                                         onClick={event => bubbleClick({ color, event })}
                 />)
             }
             <span className="test">More</span>

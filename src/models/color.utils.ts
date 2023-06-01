@@ -5,9 +5,8 @@ export interface Color {
 
 export interface ColorBubble {
     color: Color;
-    event: MouseEvent;
+    event: React.MouseEvent;
 }
-
 
 export const COLORS = [
     "#ff7459",
