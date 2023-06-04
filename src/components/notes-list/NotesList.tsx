@@ -1,5 +1,5 @@
 import Card from "@mui/material/Card";
-import React, {ForwardedRef, forwardRef, useEffect, useRef} from "react";
+import React, {ForwardedRef, forwardRef, memo, useEffect, useRef, useState} from "react";
 import {Note} from "../../models/note.model";
 import "./NotesList.css"
 import {CardContent, Typography} from "@mui/material";
@@ -33,8 +33,6 @@ class GridService {
     public gridChanged(width: number): void {
         this.cols = Math.min(Math.max(Math.floor(width / NOTE_WIDTH), 1), MAX_COLS);
         this.pos = Math.max(Math.floor((width - (GRID_PADDING + this.cols * NOTE_WIDTH)) / 2), 0);
-        console.log('grid changed');
-        console.log(this.pos);
     }
 
     public relayout(notes: HTMLElement[]): void {
@@ -56,9 +54,9 @@ class GridService {
 
 export const gridService = new GridService();
 
-const NoteListItem = forwardRef(function ({ note }: { note: Note }, ref: ForwardedRef<HTMLDivElement>) {
-
-    return <div ref={ref} className='note no-select note-container'>
+const NoteListItem = memo(function ({ note }: { note: Note }) {
+    console.log(`render ${note.id}`);
+    return <div className='note no-select note-container'>
         <Card>
             <CardContent>
                 <Typography variant="h5" component="div">{ note.title }</Typography>
@@ -67,10 +65,11 @@ const NoteListItem = forwardRef(function ({ note }: { note: Note }, ref: Forward
         </Card>
         <div className="overlay"></div>
     </div>
-});
+})
 
 function NotesList() {
-    const notes: Note[] = [
+    // const notes: Note[] =
+    const [notes, setNotes] = useState([
         {
             id: 1,
             title: 'Note 1',
@@ -86,27 +85,9 @@ function NotesList() {
             title: 'Note 3',
             content: 'Content 3'
         }
-    ];
-
-
-    // const [container, setContainer] = useState<HTMLDivElement | null>(null);
-
-    // console.log(container);
-
-    /*useResize(container, width => {
-        gridService.gridChanged(width);
-        console.log(container);
-        // console.log('1');
-        if (container) {
-            layoutAnimation();
-        }
-        if (!firstResize) {
-            setFirstResize(true);
-        }
-    });*/
-
+    ]);
     const container = useRef<HTMLDivElement>(null);
-    const width = useResize(container, 500);
+    const width = useResize(container, 300);
 
     const layoutAnimation = (notes: Note[] = []) => {
         const len = container.current?.children.length || 0;
@@ -172,6 +153,26 @@ function NotesList() {
             }, 150);
         }*/
     }
+
+    useEffect(() => {
+        setTimeout(() => {
+            setNotes([
+                ...notes,
+                {
+                    id: 4,
+                    title: 'Note 4',
+                    content: 'Content 4'
+                },
+                {
+                    id: 5,
+                    title: 'Note 5',
+                    content: 'Content 5'
+                },
+            ]);
+        }, 7000);
+    }, []);
+
+    console.log('render');
 
     return <div ref={container} className='notes notes-container'>
         {
