@@ -3,7 +3,8 @@ import {useDispatch} from 'react-redux';
 import {stubDataLoaded} from "./store/task-organizer-state";
 import "./common-classes.css"
 import SideMenu from "./components/side-menu/SideMenu";
-import {ColorBubble} from './models/color.utils';
+import {ColorBubble} from './models/color.model';
+import NotesList, {gridService} from './components/notes-list/NotesList';
 
 
 function App() {
@@ -73,13 +74,7 @@ function App() {
         <div ref={bubbleRef} className='bubble-container'>
             <div className='bubble'></div>
         </div>
-        {
-            /*
-
-        <app-notes-list class="notes"></app-notes-list>
-
-             */
-        }
+        <NotesList />
     </>
 }
 

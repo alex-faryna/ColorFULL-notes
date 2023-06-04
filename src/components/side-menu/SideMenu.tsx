@@ -2,7 +2,7 @@ import React, {useRef, useState} from "react";
 import Button from "@mui/material/Button";
 import {Add} from "@mui/icons-material";
 import "./SideMenu.css"
-import {Color, ColorBubble, THEME_COLORS} from "../../models/color.utils";
+import {Color, ColorBubble, THEME_COLORS} from "../../models/color.model";
 
 
 function SideMenu({ bubbleClick = () => {} } = { bubbleClick: (colorBubble: ColorBubble) => {} }) {
