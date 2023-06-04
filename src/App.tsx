@@ -28,7 +28,7 @@ function App() {
             transform: `translateY(110px)`,
         }
     ];
-    const getBubbleAnimation = (left: number, color: string, ppp = 50) => [
+    const getBubbleAnimation = (left: number, color: string) => [
         {
             opacity: 1,
             borderRadius: "50%",
@@ -53,7 +53,7 @@ function App() {
             borderRadius: "4px",
             width: "200px",
             aspectRatio: 3.3,
-            transform: `translateX(${ppp + 92 }px)`,
+            transform: `translateX(${gridService.pos + 82}px)`,
             opacity: 0.35,
         }
     ];

@@ -55,7 +55,6 @@ class GridService {
 export const gridService = new GridService();
 
 const NoteListItem = memo(function ({ note }: { note: Note }) {
-    console.log(`render ${note.id}`);
     return <div className='note no-select note-container'>
         <Card>
             <CardContent>
@@ -111,7 +110,6 @@ function NotesList() {
     const getNotePos = (position: Position, offset = 0): string => {
         return `translate3d(${position[0] + gridService.pos}px, ${position[1] + offset}px, 0px)`;
     }
-
 
     const noteAnimation = (i: number, pos: Position, loadedIdx: number[], note?: Note) => {
         const noteElem = container.current?.children[i] as HTMLElement;
