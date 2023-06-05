@@ -1,5 +1,7 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {Sprint, TaskInEpic} from "../models/sprint.model";
+import {Note} from "../models/note.model";
+import { Color } from '../models/color.model';
 
 export interface Status {
     id: number;
@@ -24,6 +26,7 @@ export type TaskOrganizerState = {
     statues: Status[],
     epics: Epic[],
     sprints: Sprint[],
+    notes: Note[],
 };
 
 const initialState: TaskOrganizerState = {
@@ -31,6 +34,7 @@ const initialState: TaskOrganizerState = {
     statues: [],
     epics: [],
     sprints: [],
+    notes: [],
 };
 
 // remove
@@ -41,12 +45,10 @@ const statuses = [
     { id: 2, label: 'Test'},
     { id: 3, label: 'Done'}
 ];
-
 const epics = [
     { id: 0, label: 'Main'},
     { id: 1, label: 'Bugs'}
 ];
-
 const sprint = {
     id: 0,
     tasks: {
@@ -107,6 +109,34 @@ export const organizerSlice = createSlice({
             state.statues = statuses;
             state.sprints = [sprint];
             state.loading = 'loaded';
+
+            state.notes = [
+                {
+                    id: 0,
+                    title: 'Note 1',
+                    content: 'Content 1'
+                },
+                {
+                    id: 1,
+                    title: 'Note 2',
+                    content: 'Content 2'
+                },
+                {
+                    id: 2,
+                    title: 'Note 3',
+                    content: 'Content 3'
+                }
+            ];
+        },
+        taskCreated: (state, { payload }: PayloadAction<{ color: string }>) => {
+            state.notes = [
+                {
+                    id: state.notes.length,
+                    title: `New note ${state.notes.length}`,
+                    content: ''
+                },
+                ...state.notes,
+            ];
         },
         taskDragged: (state, { payload }: PayloadAction<{ sprint: number, from: DragLocationData, to: DragLocationData }>) => {
             const from = payload.from;
@@ -129,6 +159,6 @@ export const organizerSlice = createSlice({
     },
 });
 
-export const { setLoading, setError, stubDataLoaded, taskDragged } = organizerSlice.actions;
+export const { setLoading, setError, stubDataLoaded, taskCreated } = organizerSlice.actions;
 
 export default organizerSlice.reducer;

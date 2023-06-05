@@ -1,14 +1,16 @@
-import React, {useEffect, useRef} from 'react';
-import {useDispatch} from 'react-redux';
-import {stubDataLoaded} from "./store/task-organizer-state";
+import React, {useCallback, useEffect, useRef} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {stubDataLoaded, taskCreated} from "./store/task-organizer-state";
 import "./common-classes.css"
 import SideMenu from "./components/side-menu/SideMenu";
 import {ColorBubble} from './models/color.model';
 import NotesList, {gridService} from './components/notes-list/NotesList';
+import {RootState} from "./store";
 
 
 function App() {
     const dispatch = useDispatch();
+    const state = useSelector((state: RootState) => state.organizer);
 
     useEffect(() => {
         dispatch(stubDataLoaded());
@@ -59,22 +61,23 @@ function App() {
     ];
     const bubbleRef = useRef<HTMLDivElement>(null);
 
-    const bubbleClick = (bubble: ColorBubble) => {
+    const bubbleClick = useCallback(function (bubble: ColorBubble) {
         const color = bubble.color.color;
+        dispatch(taskCreated({ color }));
         const target = (bubble.event.target as HTMLElement).getBoundingClientRect();
         const bubbleContainer = bubbleRef.current!;
         const bubbleElement = bubbleRef.current!.firstElementChild as HTMLElement;
         bubbleElement.style.background = color;
         bubbleElement.animate(getBubbleAnimation(target.left, color), {duration: 400});
         bubbleContainer.animate(getBubbleContainerAnimation(target.top), {duration: 400});
-    }
+    }, [dispatch]);
 
     return <>
         <SideMenu bubbleClick={bubbleClick}/>
         <div ref={bubbleRef} className='bubble-container'>
             <div className='bubble'></div>
         </div>
-        <NotesList />
+        <NotesList notes={state.notes}/>
     </>
 }
 

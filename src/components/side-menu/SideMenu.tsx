@@ -1,11 +1,10 @@
-import React, {useRef, useState} from "react";
+import React, {memo, useRef, useState} from "react";
 import Button from "@mui/material/Button";
 import {Add} from "@mui/icons-material";
 import "./SideMenu.css"
-import {Color, ColorBubble, THEME_COLORS} from "../../models/color.model";
+import {ColorBubble, THEME_COLORS} from "../../models/color.model";
 
-
-function SideMenu({ bubbleClick = () => {} } = { bubbleClick: (colorBubble: ColorBubble) => {} }) {
+const SideMenu = memo(function({ bubbleClick = () => {} }: { bubbleClick: (colorBubble: ColorBubble) => void }) {
     const BUBBLE_FRAME_TIME = 85;
     const rawAnimation = [
         {transform: "translateY(0)", easing: "ease-out"},
@@ -52,6 +51,8 @@ function SideMenu({ bubbleClick = () => {} } = { bubbleClick: (colorBubble: Colo
             <span className="test">More</span>
         </div>
     </div>
-}
+});
+
+
 
 export default SideMenu;
