@@ -4,6 +4,7 @@ import {Note} from "../../models/note.model";
 import "./NotesList.css"
 import {CardContent, Typography} from "@mui/material";
 import useResize from "../utils/resize";
+import { getContrastColor } from "../../models/color.model";
 
 
 const MAX_COLS = 10;
@@ -55,8 +56,12 @@ class GridService {
 export const gridService = new GridService();
 
 const NoteListItem = memo(function ({ note }: { note: Note }) {
+
+    const background = note?.color || '#ffffff';
+    const color = getContrastColor(background) || '#000000';
+
     return <div className='note no-select note-container'>
-        <Card>
+        <Card style={{ background, color }}>
             <CardContent>
                 <Typography variant="h5" component="div">{ note.title }</Typography>
                 <Typography variant="body1">{ note.content }</Typography>

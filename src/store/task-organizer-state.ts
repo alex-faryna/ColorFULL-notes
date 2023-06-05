@@ -1,7 +1,6 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {Sprint, TaskInEpic} from "../models/sprint.model";
+import {Sprint} from "../models/sprint.model";
 import {Note} from "../models/note.model";
-import { Color } from '../models/color.model';
 
 export interface Status {
     id: number;
@@ -133,29 +132,12 @@ export const organizerSlice = createSlice({
                 {
                     id: state.notes.length,
                     title: `New note ${state.notes.length}`,
-                    content: ''
+                    content: '',
+                    color: payload.color
                 },
                 ...state.notes,
             ];
         },
-        taskDragged: (state, { payload }: PayloadAction<{ sprint: number, from: DragLocationData, to: DragLocationData }>) => {
-            const from = payload.from;
-            const to = payload.to;
-            const sprint = state.sprints.find(sprint => sprint.id === payload.sprint);
-            if (!sprint) return;
-            const epic = sprint.tasks[from.epic];
-            if (!epic) return;
-            const tasks = epic[from.status];
-            if (!tasks) return;
-            const task = tasks.splice(from.idx, 1);
-            if (!task) return;
-            const status = sprint.tasks[to.epic][to.status];
-            if (status) {
-                sprint.tasks[to.epic][to.status].splice(to.idx, 0, task[0]);
-            } else {
-                sprint.tasks[to.epic][to.status] = [task[0]];
-            }
-        }
     },
 });
 
